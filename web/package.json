@@ -1,0 +1,36 @@
+{
+  "name": "voiceuse-web",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Talk to Claude and watch it use a browser for you.",
+  "type": "module",
+  "scripts": {
+    "start": "tsx server/index.ts",
+    "dev": "tsx watch server/index.ts",
+    "test": "tsx --test test/*.test.ts",
+    "typecheck": "tsc --noEmit",
+    "postinstall": "playwright install chromium"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.132.1",
+    "@typesafe-ai/sdk": "^0.6.0",
+    "kokoro-js": "^1.2.1",
+    "playwright": "^1.64.0",
+    "ws": "^8.22.0"
+  },
+  "devDependencies": {
+    "@types/node": "^26.6.4",
+    "@types/ws": "^8.18.2",
+    "tsx": "^4.23.15",
+    "typescript": "^7.0.2"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/kxhyra-sys/voiceuse.git",
+    "directory": "web"
+  },
+  "engines": {
+    "node": ">=22"
+  }
+}

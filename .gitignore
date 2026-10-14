@@ -1,0 +1,5 @@
+.build/
+build/
+.playwright-mcp/
+.DS_Store
+.claude/

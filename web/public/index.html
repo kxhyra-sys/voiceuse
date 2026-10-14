@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>VoiceUse</title>
+  <link rel="icon" href="icon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500&family=Onest:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="top">
+    <a class="brand" href="/" aria-label="VoiceUse home">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="9" width="3" height="6" rx="1.5"/><rect x="8.5" y="5" width="3" height="14" rx="1.5"/><rect x="14" y="7" width="3" height="10" rx="1.5"/><rect x="19.5" y="10" width="2" height="4" rx="1"/></svg>
+      VoiceUse
+    </a>
+    <nav class="tabs" id="tabs" aria-label="Browser tabs"></nav>
+    <button class="icon-btn" id="newTab" title="New tab" aria-label="New tab">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="ghost" id="sessionsBtn">Sessions</button>
+    <button class="ghost" id="settingsBtn">Settings</button>
+  </header>
+
+  <main class="stage">
+    <section class="screen" aria-label="Live browser">
+      <form class="addr" id="addr">
+        <button type="button" class="icon-btn" id="back" aria-label="Back"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg></button>
+        <button type="button" class="icon-btn" id="forward" aria-label="Forward"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></button>
+        <button type="button" class="icon-btn" id="reload" aria-label="Reload"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 12a7 7 0 1 1-2.05-4.95M19 4v4h-4"/></svg></button>
+        <input id="url" name="url" autocomplete="off" spellcheck="false" placeholder="Type a web address" aria-label="Web address">
+      </form>
+      <div class="view" id="view" tabindex="0" aria-label="Live view. Click to take control; Claude can still act.">
+        <img id="frame" alt="" draggable="false">
+        <div class="view-empty" id="viewEmpty">Connecting to the browser…</div>
+        <div class="control-hint" id="controlHint">You have the keyboard. Click outside the page to hand it back.</div>
+      </div>
+    </section>
+
+    <aside class="log" aria-label="Conversation">
+      <ol id="log"></ol>
+      <div class="log-empty" id="logEmpty">
+        <p class="say">“Find the cheapest flight from Vienna to Lisbon next Friday.”</p>
+        <p>Press <kbd>Space</kbd> or the talk bar, say what you want, and watch Claude do it. You can take over the page at any time to log in or check something.</p>
+      </div>
+      <button class="ghost small" id="resetBtn">New conversation</button>
+    </aside>
+  </main>
+
+  <footer class="dock">
+    <button class="talk" id="talk" data-state="idle" aria-live="polite">
+      <span class="lamp" aria-hidden="true"></span>
+      <span class="talk-text" id="talkText">Press Space and speak</span>
+      <canvas id="wave" aria-hidden="true"></canvas>
+    </button>
+    <form class="typed" id="typed">
+      <input id="typedInput" autocomplete="off" placeholder="Or type a request" aria-label="Type a request">
+      <button class="send" aria-label="Send">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h13M13 6l6 6-6 6"/></svg>
+      </button>
+    </form>
+  </footer>
+
+  <dialog id="settings">
+    <form method="dialog" id="settingsForm">
+      <h2>Settings</h2>
+      <label>Anthropic API key
+        <input type="password" id="apiKey" autocomplete="off" placeholder="sk-ant-…">
+        <small id="keyHint">Saved in web/.env on this computer. Create one at console.anthropic.com.</small>
+      </label>
+      <label>Model
+        <select id="model"></select>
+      </label>
+      <label class="check"><input type="checkbox" id="speak" checked> Read replies out loud</label>
+      <label>Voice
+        <span class="voice-row">
+          <select id="voice"></select>
+          <button type="button" class="ghost small" id="tryVoice">Play sample</button>
+        </span>
+        <small id="voiceHint"></small>
+      </label>
+      <small id="jevHint"></small>
+      <div class="dialog-actions">
+        <button value="cancel" class="ghost" formnovalidate>Cancel</button>
+        <button value="save" class="primary" id="saveSettings">Save</button>
+      </div>
+    </form>
+  </dialog>
+
+  <dialog id="sessions">
+    <form method="dialog">
+      <h2>Sessions</h2>
+      <p class="hint">Saved in this browser after every reply. Continue one to pick up the conversation and reopen its tabs.</p>
+      <ol class="session-list" id="sessionList"></ol>
+      <p class="hint" id="sessionsEmpty">No saved sessions yet.</p>
+      <div class="dialog-actions">
+        <button value="close" class="ghost">Close</button>
+      </div>
+    </form>
+  </dialog>
+
+  <script src="app.js" type="module"></script>
+</body>
+</html>
